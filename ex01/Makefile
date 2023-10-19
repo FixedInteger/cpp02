@@ -1,7 +1,6 @@
 NAME = executable_name
 
-SRCS = main.cpp \
-
+SRCS = main.cpp 
 OBJS = $(SRCS:.c=.o)
 
 C++ = c++
@@ -10,13 +9,12 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 all: $(NAME)
 
 $(NAME): $(OBJS)
-    $(C++) $(CFLAGS) $(OBJS) -o $(NAME)
-
+	$(C++) $(CFLAGS) $(OBJS) -o $(NAME)
 clean:
-    rm -f $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-    rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
