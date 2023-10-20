@@ -14,6 +14,8 @@ class Fixed
             std::cout << "Destructor called" << std::endl;
         }
         Fixed(const int value);
+        Fixed(const float value);
+        
         Fixed(const Fixed &fixed);
         float toFloat(void) const;
         int toInt(void) const;
@@ -55,6 +57,11 @@ Fixed& Fixed::operator=(const Fixed &fixed)
         this->_fixedPointValue = fixed.getRawBits();
     return (*this);
 }
+ Fixed:: Fixed(const float value)
+{
+    std::cout << "Float constructor called" << std::endl;
+    this->_fixedPointValue = roundf(value * (1 << this->_fractionalBits));
+}
 
 int Fixed::toInt(void) const
 {
@@ -77,6 +84,7 @@ std::cout << "a is " << a << std::endl;
 std::cout << "b is " << b << std::endl;
 std::cout << "c is " << c << std::endl;
 std::cout << "d is " << d << std::endl;
+
 std::cout << "a is " << a.toInt() << " as integer" << std::endl;
 std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 std::cout << "c is " << c.toInt() << " as integer" << std::endl;
