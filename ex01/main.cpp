@@ -39,12 +39,12 @@ float Fixed::toFloat(void) const
 
 int Fixed::getRawBits(void) const
 {
-    std::cout << "getRawBits member function called" << std::endl;
+   
     return (this->_fixedPointValue);
 }
 void Fixed::setRawBits(int const raw)
 {
-    std::cout << "setRawBits member function called" << std::endl;
+  
     this->_fixedPointValue = raw;
 }
 Fixed::Fixed(const Fixed &fixed)
@@ -92,4 +92,5 @@ std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 std::cout << "d is " << d.toInt() << " as integer" << std::endl;
 return 0;
+
 }

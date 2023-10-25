@@ -1,5 +1,7 @@
 #include <iostream>
+#include <string>
 #include <cmath>
+
 class Fixed
 {
     private:
@@ -18,63 +20,60 @@ class Fixed
         }
         Fixed(const int value);
         Fixed(const float value);
-        
         Fixed(const Fixed &fixed);
-        int add(Fixed const &fixed) const;
-        int sub(Fixed const &fixed) const;
-        int mul(Fixed const &fixed) const;
-        int div(Fixed const &fixed) const;
-        int compareTo(Fixed const &fixed) const;
         float toFloat(void) const;
         int toInt(void) const;
         Fixed& operator=(const Fixed &fixed);
         int getRawBits(void) const;
         void setRawBits(int const raw);
-        int min(Fixed const &fixed) const;
-        int max(Fixed const &fixed) const;
-        
+        float operator*(const Fixed &fixed) const;
+        float max(const Fixed &fixed1, const Fixed &fixed2);
+        float min(const Fixed &fixed1, const Fixed &fixed2);
+        float operator+(const Fixed &fixed) const;
+
 };
+
 Fixed ::Fixed(const int value)
 {
     std::cout << "Int constructor called" << std::endl;
     this->_fixedPointValue = value << this->_fractionalBits;
 }
 
-int Fixed::compareTo(Fixed const &fixed) const
+Fixed ::Fixed(const float value)
 {
-    if (this->_fixedPointValue > fixed._fixedPointValue)
-        return (1);
-    else if (this->_fixedPointValue < fixed._fixedPointValue)
-        return (-1);
-    else
-        return (0);
+    std::cout << "Float constructor called" << std::endl;
+    this->_fixedPointValue = roundf(value * (1 << this->_fractionalBits));
 }
+
 float Fixed::toFloat(void) const
 {
     return ((float)this->_fixedPointValue / (1 << this->_fractionalBits));
 }
 
-int Fixed::add(Fixed const &fixed) const
+int Fixed::toInt(void) const
 {
-    return (this->_fixedPointValue + fixed._fixedPointValue);
+    return (this->_fixedPointValue >> this->_fractionalBits);
 }
-int Fixed::sub(Fixed const &fixed) const
+
+int Fixed::getRawBits(void) const
 {
-    return (this->_fixedPointValue - fixed._fixedPointValue);
+   
+    return (this->_fixedPointValue);
 }
-int Fixed::mul(Fixed const &fixed) const
+
+
+void Fixed::setRawBits(int const raw)
 {
-    return (this->_fixedPointValue * fixed._fixedPointValue);
+   
+    this->_fixedPointValue = raw;
 }
-int Fixed::div(Fixed const &fixed) const
-{
-    return (this->_fixedPointValue / fixed._fixedPointValue);
-}
+
 Fixed::Fixed(const Fixed &fixed)
 {
     std::cout << "Copy constructor called" << std::endl;
     *this = fixed;
 }
+
 Fixed& Fixed::operator=(const Fixed &fixed)
 {
     std::cout << "Copy Assignement operator called" << std::endl;
@@ -82,31 +81,45 @@ Fixed& Fixed::operator=(const Fixed &fixed)
         this->_fixedPointValue = fixed.getRawBits();
     return (*this);
 }
- Fixed:: Fixed(const float value)
+float Fixed::max(const Fixed &fixed1, const Fixed &fixed2)
 {
-    std::cout << "Float constructor called" << std::endl;
-    this->_fixedPointValue = roundf(value * (1 << this->_fractionalBits));
-}
-int Fixed::min(Fixed const &fixed) const
-{
-    if (this->_fixedPointValue > fixed._fixedPointValue)
-        return (fixed._fixedPointValue);
+    if (fixed1.toFloat() > fixed2.toFloat())
+        return (fixed1.toFloat());
     else
-        return (this->_fixedPointValue);
+        return (fixed2.toFloat());
 }
-int Fixed::max(Fixed const &fixed) const
+
+float Fixed::min(const Fixed &fixed1, const Fixed &fixed2)
 {
-    if (this->_fixedPointValue > fixed._fixedPointValue)
-        return (this->_fixedPointValue);
+    if (fixed1.toFloat() < fixed2.toFloat())
+        return (fixed1.toFloat());
     else
-        return (fixed._fixedPointValue);
+        return (fixed2.toFloat());
 }
-#include <iostream>
 
-int main( void ) {
-Fixed a;
+float Fixed::operator+(const Fixed &fixed) const
+{
+    return (this->toFloat() + fixed.toFloat());
+}
 
-Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+float Fixed::operator*(const Fixed &fixed) const
+{
+    return (this->toFloat() * fixed.toFloat());
+}
 
 
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
+{
+    os << fixed.toFloat();
+    return (os);
+}
+
+int main(void)
+{
+    Fixed a;
+    Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;
+    std::cout << Fixed::max( a, b ) << std::endl;
+    return (0);
 }
