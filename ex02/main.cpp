@@ -27,8 +27,8 @@ class Fixed
         int getRawBits(void) const;
         void setRawBits(int const raw);
         float operator*(const Fixed &fixed) const;
-        float max(const Fixed &fixed1, const Fixed &fixed2);
-        float min(const Fixed &fixed1, const Fixed &fixed2);
+        static Fixed & min(const Fixed &fixed1, const Fixed &fixed2);
+        static Fixed & max(const Fixed &fixed1, const Fixed &fixed2);
         float operator+(const Fixed &fixed) const;
 
 };
@@ -81,20 +81,20 @@ Fixed& Fixed::operator=(const Fixed &fixed)
         this->_fixedPointValue = fixed.getRawBits();
     return (*this);
 }
-float Fixed::max(const Fixed &fixed1, const Fixed &fixed2)
+
+static Fixed &Fixed::max(Fixed &fixed1, Fixed &fixed2)
 {
     if (fixed1.toFloat() > fixed2.toFloat())
-        return (fixed1.toFloat());
+        return (fixed1);
     else
-        return (fixed2.toFloat());
+        return (fixed2);
 }
-
-float Fixed::min(const Fixed &fixed1, const Fixed &fixed2)
+Fixed &Fixed::min(Fixed &fixed1, Fixed &fixed2)
 {
     if (fixed1.toFloat() < fixed2.toFloat())
-        return (fixed1.toFloat());
+        return (fixed1);
     else
-        return (fixed2.toFloat());
+        return (fixed2);
 }
 
 float Fixed::operator+(const Fixed &fixed) const
@@ -117,9 +117,8 @@ std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
 int main(void)
 {
     Fixed a;
-    Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
-    std::cout << a << std::endl;
-    std::cout << b << std::endl;
-    std::cout << Fixed::max( a, b ) << std::endl;
-    return (0);
+    Fixed const b( Fixed( 5 ) * Fixed( 2 ) );
+    Fixed c = a + b;
+    std::cout << c << std::endl;
+    std::cout <<max( a, b ) << std::endl;
 }
