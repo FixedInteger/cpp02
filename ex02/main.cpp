@@ -25,6 +25,10 @@ class Fixed
         Fixed operator--(int );
         friend int operator>(const Fixed &left, const Fixed &right);
         friend int operator<(const Fixed &left, const Fixed &right);
+        friend int operator>=(const Fixed &left, const Fixed &right);
+        friend int operator<=(const Fixed &left, const Fixed &right);
+        static Fixed &max(Fixed &left, Fixed &right);
+        static const Fixed &min(Fixed &left, Fixed &right);
         Fixed(const Fixed &fixed);
         float toFloat(void) const;
         int toInt(void) const;
@@ -113,11 +117,38 @@ int operator<(const Fixed &left, const Fixed &right)
     return (left._fixedPointValue < right._fixedPointValue);
 
 }
+int operator>=(const Fixed &left, const Fixed &right)
+{
+    return (left._fixedPointValue >= right._fixedPointValue);
+
+}
+int operator<=(const Fixed &left, const Fixed &right)
+{
+    return (left._fixedPointValue <= right._fixedPointValue);
+
+}
+Fixed &Fixed::max(Fixed &left, Fixed &right)
+{
+    if (left > right)
+        return (left);
+    else
+        return (right);
+}
+
+const Fixed &Fixed::min(Fixed &left, Fixed &right)
+{
+    if (left < right)
+        return (left);
+    else
+        return (right);
+}
 
 int main()
 {
     Fixed a(213721);
     Fixed b(5);
-    std::cout << ((a> b ))<< std::endl;
+    Fixed c(5);
+    
+    std::cout <<"max" << Fixed::max(b, c) << std::endl;
   
 }
