@@ -1,8 +1,7 @@
 #include <iostream>
-#include <string>
 #include <cmath>
 
-class Fixed
+class Fixed 
 {
     private:
         int					_fixedPointValue;
@@ -20,25 +19,24 @@ class Fixed
         }
         Fixed(const int value);
         Fixed(const float value);
+        Fixed &operator++(void);
+        Fixed operator++(int );
+        Fixed &operator--(void);
+        Fixed operator--(int );
+        friend int operator>(const Fixed &left, const Fixed &right);
+        friend int operator<(const Fixed &left, const Fixed &right);
         Fixed(const Fixed &fixed);
         float toFloat(void) const;
         int toInt(void) const;
         Fixed& operator=(const Fixed &fixed);
         int getRawBits(void) const;
         void setRawBits(int const raw);
-        float operator*(const Fixed &fixed) const;
-        static Fixed & min(const Fixed &fixed1, const Fixed &fixed2);
-        static Fixed & max(const Fixed &fixed1, const Fixed &fixed2);
-        float operator+(const Fixed &fixed) const;
-
 };
-
 Fixed ::Fixed(const int value)
 {
     std::cout << "Int constructor called" << std::endl;
     this->_fixedPointValue = value << this->_fractionalBits;
 }
-
 Fixed ::Fixed(const float value)
 {
     std::cout << "Float constructor called" << std::endl;
@@ -60,8 +58,6 @@ int Fixed::getRawBits(void) const
    
     return (this->_fixedPointValue);
 }
-
-
 void Fixed::setRawBits(int const raw)
 {
    
@@ -70,55 +66,58 @@ void Fixed::setRawBits(int const raw)
 
 Fixed::Fixed(const Fixed &fixed)
 {
-    std::cout << "Copy constructor called" << std::endl;
     *this = fixed;
 }
 
 Fixed& Fixed::operator=(const Fixed &fixed)
 {
-    std::cout << "Copy Assignement operator called" << std::endl;
     if (this != &fixed)
         this->_fixedPointValue = fixed.getRawBits();
     return (*this);
 }
-
-static Fixed &Fixed::max(Fixed &fixed1, Fixed &fixed2)
+Fixed &Fixed::operator++(void)
 {
-    if (fixed1.toFloat() > fixed2.toFloat())
-        return (fixed1);
-    else
-        return (fixed2);
+    this->_fixedPointValue++;
+    return (*this);
 }
-Fixed &Fixed::min(Fixed &fixed1, Fixed &fixed2)
+Fixed Fixed::operator++(int) 
 {
-    if (fixed1.toFloat() < fixed2.toFloat())
-        return (fixed1);
-    else
-        return (fixed2);
+    Fixed tmp(*this);
+    _fixedPointValue++;
+    return (tmp);
 }
-
-float Fixed::operator+(const Fixed &fixed) const
+Fixed &Fixed::operator--(void)
 {
-    return (this->toFloat() + fixed.toFloat());
+    this->_fixedPointValue--;
+    return (*this);
 }
-
-float Fixed::operator*(const Fixed &fixed) const
+Fixed Fixed::operator--(int)
 {
-    return (this->toFloat() * fixed.toFloat());
+    Fixed tmp(*this);
+    _fixedPointValue--;
+    return (tmp);
 }
-
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
 {
     os << fixed.toFloat();
     return (os);
 }
-
-int main(void)
+ int  operator>(const Fixed &left, const Fixed &right)
 {
-    Fixed a;
-    Fixed const b( Fixed( 5 ) * Fixed( 2 ) );
-    Fixed c = a + b;
-    std::cout << c << std::endl;
-    std::cout <<max( a, b ) << std::endl;
+    return (left._fixedPointValue > right._fixedPointValue);
+
+}
+int operator<(const Fixed &left, const Fixed &right)
+{
+    return (left._fixedPointValue < right._fixedPointValue);
+
+}
+
+int main()
+{
+    Fixed a(213721);
+    Fixed b(5);
+    std::cout << ((a> b ))<< std::endl;
+  
 }

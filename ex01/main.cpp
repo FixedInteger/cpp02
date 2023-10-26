@@ -17,7 +17,6 @@ class Fixed
         }
         Fixed(const int value);
         Fixed(const float value);
-        
         Fixed(const Fixed &fixed);
         float toFloat(void) const;
         int toInt(void) const;
@@ -49,12 +48,10 @@ void Fixed::setRawBits(int const raw)
 }
 Fixed::Fixed(const Fixed &fixed)
 {
-    std::cout << "Copy constructor called" << std::endl;
     *this = fixed;
 }
 Fixed& Fixed::operator=(const Fixed &fixed)
 {
-    std::cout << "Copy Assignement operator called" << std::endl;
     if (this != &fixed)
         this->_fixedPointValue = fixed.getRawBits();
     return (*this);
@@ -75,22 +72,9 @@ std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
     return (os);
 }
 
-
-int main( void ) {
-Fixed a;
-Fixed const b( 10 );
-Fixed const c( 42.42f );
-Fixed const d( b );
-a = Fixed( 1234.4321f );
-std::cout << "a is " << a << std::endl;
-std::cout << "b is " << b << std::endl;
-std::cout << "c is " << c << std::endl;
-std::cout << "d is " << d << std::endl;
-
-std::cout << "a is " << a.toInt() << " as integer" << std::endl;
-std::cout << "b is " << b.toInt() << " as integer" << std::endl;
-std::cout << "c is " << c.toInt() << " as integer" << std::endl;
-std::cout << "d is " << d.toInt() << " as integer" << std::endl;
-return 0;
-
+int main(void  ) 
+{
+    Fixed a;
+    Fixed const b( 10.12f );
+    std::cout << b << std::endl;
 }
