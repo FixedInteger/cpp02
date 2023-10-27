@@ -33,6 +33,10 @@ class Fixed
         float toFloat(void) const;
         int toInt(void) const;
         Fixed& operator=(const Fixed &fixed);
+        Fixed &operator+(const Fixed &fixed);
+        Fixed &operator-(const Fixed &fixed);
+        Fixed &operator*(const Fixed &fixed);
+        Fixed &operator/(const Fixed &fixed);
         int getRawBits(void) const;
         void setRawBits(int const raw);
 };
@@ -122,6 +126,30 @@ int operator>=(const Fixed &left, const Fixed &right)
     return (left._fixedPointValue >= right._fixedPointValue);
 
 }
+Fixed &Fixed::operator+(const Fixed &fixed)
+{
+    this->_fixedPointValue += fixed._fixedPointValue;
+    return (*this);
+}
+
+Fixed &Fixed::operator-(const Fixed &fixed)
+{
+    this->_fixedPointValue -= fixed._fixedPointValue;
+    return (*this);
+}
+
+Fixed &Fixed::operator*(const Fixed &fixed)
+{
+    this->_fixedPointValue *= fixed._fixedPointValue;
+    return (*this);
+}
+
+Fixed &Fixed::operator/(const Fixed &fixed)
+{
+    this->_fixedPointValue /= fixed._fixedPointValue;
+    return (*this);
+}
+
 int operator<=(const Fixed &left, const Fixed &right)
 {
     return (left._fixedPointValue <= right._fixedPointValue);
@@ -142,6 +170,7 @@ const Fixed &Fixed::min(Fixed &left, Fixed &right)
     else
         return (right);
 }
+
 
 int main()
 {
