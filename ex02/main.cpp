@@ -23,10 +23,12 @@ class Fixed
         Fixed operator++(int );
         Fixed &operator--(void);
         Fixed operator--(int );
-        friend int operator>(const Fixed &left, const Fixed &right);
-        friend int operator<(const Fixed &left, const Fixed &right);
-        friend int operator>=(const Fixed &left, const Fixed &right);
-        friend int operator<=(const Fixed &left, const Fixed &right);
+        int operator<(const Fixed &fixed);
+        int operator>(const Fixed &fixed);
+        int operator<=(const Fixed &fixed);
+        int operator>=(const Fixed &fixed);
+        int operator==(const Fixed &fixed);
+        int operator!=(const Fixed &fixed);
         static Fixed &max(Fixed &left, Fixed &right);
         static const Fixed &min(Fixed &left, Fixed &right);
         Fixed(const Fixed &fixed);
@@ -111,21 +113,36 @@ std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
     os << fixed.toFloat();
     return (os);
 }
- int  operator>(const Fixed &left, const Fixed &right)
-{
-    return (left._fixedPointValue > right._fixedPointValue);
+ int Fixed::operator>(const Fixed &fixed)
+ {
+     return (this->_fixedPointValue > fixed._fixedPointValue);
+ }
 
-}
-int operator<(const Fixed &left, const Fixed &right)
+int Fixed::operator<(const Fixed &fixed)
 {
-    return (left._fixedPointValue < right._fixedPointValue);
-
+    return (this->_fixedPointValue < fixed._fixedPointValue);
 }
-int operator>=(const Fixed &left, const Fixed &right)
+
+int Fixed::operator>=(const Fixed &fixed)
 {
-    return (left._fixedPointValue >= right._fixedPointValue);
-
+    return (this->_fixedPointValue >= fixed._fixedPointValue);
 }
+
+int Fixed::operator<=(const Fixed &fixed)
+{
+    return (this->_fixedPointValue <= fixed._fixedPointValue);
+}
+
+int Fixed::operator==(const Fixed &fixed)
+{
+    return (this->_fixedPointValue == fixed._fixedPointValue);
+}
+
+int Fixed::operator!=(const Fixed &fixed)
+{
+    return (this->_fixedPointValue != fixed._fixedPointValue);
+}
+ 
 Fixed &Fixed::operator+(const Fixed &fixed)
 {
     this->_fixedPointValue += fixed._fixedPointValue;
@@ -148,12 +165,6 @@ Fixed &Fixed::operator/(const Fixed &fixed)
 {
     this->_fixedPointValue /= fixed._fixedPointValue;
     return (*this);
-}
-
-int operator<=(const Fixed &left, const Fixed &right)
-{
-    return (left._fixedPointValue <= right._fixedPointValue);
-
 }
 Fixed &Fixed::max(Fixed &left, Fixed &right)
 {
