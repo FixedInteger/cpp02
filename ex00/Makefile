@@ -1,15 +1,15 @@
 NAME = Fixed_one
 
-SRCS = main.cpp 
+SRCS = main.cpp Fixed.cpp
 OBJS = $(SRCS:.c=.o)
-# HEADER = Fixed.hpp
+HEADER = Fixed.hpp
 
 C++ = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
-$(NAME): $(OBJS) #$(HEADER)//
+$(NAME): $(OBJS) $(HEADER)
 	$(C++) $(CFLAGS) $(OBJS) -o $(NAME)
 clean:
 	rm -f $(OBJS)
@@ -18,4 +18,3 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
