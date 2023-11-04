@@ -1,16 +1,15 @@
-NAME = Fixed_one
+CXX = C++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+SRCS = main.cpp
+OBJS = $(SRCS:.cpp=.o)
+NAME = Fixed_00
 
-SRCS = main.cpp Fixed.cpp
-OBJS = $(SRCS:.c=.o)
-HEADER = Fixed.hpp
-
-C++ = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(HEADER)
-	$(C++) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+
 clean:
 	rm -f $(OBJS)
 

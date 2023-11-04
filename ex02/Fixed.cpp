@@ -134,3 +134,10 @@ const Fixed &Fixed::min(Fixed &left, Fixed &right)
     else
         return (right);
 }
+ Fixed &Fixed::maxone(const Fixed &left, const Fixed &right) 
+{
+    if (left < right)
+        return (left);
+    else
+        return (right);
+}
