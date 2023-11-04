@@ -1,4 +1,13 @@
 #include "Fixed.hpp"
+
+Fixed::Fixed() 
+{
+    this->_fixedPointValue = 0;
+}
+
+Fixed::~Fixed()
+{
+}
 Fixed ::Fixed(const int value)
 {
     std::cout << "Int constructor called" << std::endl;
@@ -134,7 +143,14 @@ const Fixed &Fixed::min(Fixed &left, Fixed &right)
     else
         return (right);
 }
- Fixed &Fixed::maxone(const Fixed &left, const Fixed &right) 
+const Fixed &Fixed::maxt(Fixed &left, Fixed &right) 
+{
+    if (left > right)
+        return (left);
+    else
+        return (right);
+}
+const Fixed &Fixed::mint(Fixed &left, Fixed &right) 
 {
     if (left < right)
         return (left);

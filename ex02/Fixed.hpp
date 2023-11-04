@@ -8,16 +8,8 @@ class Fixed
 		int					_fixedPointValue;
 		const static int    _fractionalBits = 8;
 	public:
-		Fixed() 
-		{
-			std::cout << "Default constructor called" << std::endl;
-			this->_fixedPointValue = 0;
-
-		}
-		~Fixed()
-		{
-			std::cout << "Destructor called" << std::endl;
-		}
+		Fixed();
+		~Fixed();
 		Fixed(const int value);
 		Fixed(const float value);
 		Fixed &operator++(void);
@@ -32,7 +24,8 @@ class Fixed
 		int operator!=(const Fixed &fixed);
 		static Fixed &max(Fixed &left, Fixed &right) ;
 		static const Fixed &min(Fixed &left, Fixed &right)  ;
-		static const Fixed &maxone(const Fixed &left, const Fixed &right) ;
+		static const Fixed &maxt(Fixed &left, Fixed &right) ;
+		static const Fixed &mint(Fixed &left, Fixed &right) ;
 		Fixed(const Fixed &fixed);
 		float toFloat(void) const;
 		int toInt(void) const;
