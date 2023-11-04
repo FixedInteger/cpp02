@@ -10,13 +10,15 @@ Fixed::~Fixed()
 }
 Fixed ::Fixed(const int value)
 {
-    std::cout << "Int constructor called" << std::endl;
     this->_fixedPointValue = value << this->_fractionalBits;
 }
 Fixed ::Fixed(const float value)
 {
-    std::cout << "Float constructor called" << std::endl;
     this->_fixedPointValue = roundf(value * (1 << this->_fractionalBits));
+}
+Fixed::Fixed(const Fixed &fixed)
+{
+    *this = fixed;
 }
 
 float Fixed::toFloat(void) const
@@ -40,10 +42,6 @@ void Fixed::setRawBits(int const raw)
     this->_fixedPointValue = raw;
 }
 
-Fixed::Fixed(const Fixed &fixed)
-{
-    *this = fixed;
-}
 
 Fixed& Fixed::operator=(const Fixed &fixed)
 {
@@ -75,32 +73,32 @@ Fixed Fixed::operator--(int)
 }
 
 
- int Fixed::operator>(const Fixed &fixed)
+ int Fixed::operator>(const Fixed &fixed) const 
  {
      return (this->_fixedPointValue > fixed._fixedPointValue);
  }
 
-int Fixed::operator<(const Fixed &fixed)
+int Fixed::operator<(const Fixed &fixed) const 
 {
     return (this->_fixedPointValue < fixed._fixedPointValue);
 }
 
-int Fixed::operator>=(const Fixed &fixed)
+int Fixed::operator>=(const Fixed &fixed) const 
 {
     return (this->_fixedPointValue >= fixed._fixedPointValue);
 }
 
-int Fixed::operator<=(const Fixed &fixed)
+int Fixed::operator<=(const Fixed &fixed) const 
 {
     return (this->_fixedPointValue <= fixed._fixedPointValue);
 }
 
-int Fixed::operator==(const Fixed &fixed)
+int Fixed::operator==(const Fixed &fixed) const 
 {
     return (this->_fixedPointValue == fixed._fixedPointValue);
 }
 
-int Fixed::operator!=(const Fixed &fixed)
+int Fixed::operator!=(const Fixed &fixed) const 
 {
     return (this->_fixedPointValue != fixed._fixedPointValue);
 }
@@ -119,16 +117,18 @@ Fixed &Fixed::operator-(const Fixed &fixed)
 
 Fixed &Fixed::operator*(const Fixed &fixed)
 {
+    this->_fixedPointValue /= 256;
     this->_fixedPointValue *= fixed._fixedPointValue;
     return (*this);
 }
 
 Fixed &Fixed::operator/(const Fixed &fixed)
 {
+    this->_fixedPointValue *= 256;
     this->_fixedPointValue /= fixed._fixedPointValue;
     return (*this);
 }
-Fixed &Fixed::max(Fixed &left, Fixed &right) 
+ const Fixed &Fixed::max(const Fixed &left, const Fixed &right)  
 {
     if (left > right)
         return (left);
@@ -136,7 +136,7 @@ Fixed &Fixed::max(Fixed &left, Fixed &right)
         return (right);
 }
 
-const Fixed &Fixed::min(Fixed &left, Fixed &right) 
+const Fixed &Fixed::min(const Fixed &left, const Fixed &right) 
 {
     if (left < right)
         return (left);
