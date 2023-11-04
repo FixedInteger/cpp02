@@ -15,6 +15,8 @@ Fixed ::Fixed(const int value)
 Fixed ::Fixed(const float value)
 {
     this->_fixedPointValue = roundf(value * (1 << this->_fractionalBits));
+    puts("Float constructor called");
+    std::cout << this->_fixedPointValue << std::endl;
 }
 Fixed::Fixed(const Fixed &fixed)
 {
@@ -117,15 +119,15 @@ Fixed &Fixed::operator-(const Fixed &fixed)
 
 Fixed &Fixed::operator*(const Fixed &fixed)
 {
-    this->_fixedPointValue /= 256;
     this->_fixedPointValue *= fixed._fixedPointValue;
+    this->_fixedPointValue /= 256;
     return (*this);
 }
 
 Fixed &Fixed::operator/(const Fixed &fixed)
 {
-    this->_fixedPointValue *= 256;
     this->_fixedPointValue /= fixed._fixedPointValue;
+    this->_fixedPointValue =(this->_fixedPointValue  * 256);
     return (*this);
 }
  const Fixed &Fixed::max(const Fixed &left, const Fixed &right)  

@@ -19,7 +19,7 @@ class Fixed
 		Fixed &operator--(void);
 		Fixed operator--(int );
 		int operator<(const Fixed &fixed) const ;
-		int operator>(const Fixed &fixed)const ;
+		int operator>(const Fixed &fixed)	const ;
 		int operator<=(const Fixed &fixed) const ;
 		int operator>=(const Fixed &fixed) const ;
 		int operator==(const Fixed &fixed)	const ;
